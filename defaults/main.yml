@@ -1,0 +1,24 @@
+---
+bind9_hostname: "{{ ansible_hostname }}"
+
+bind9_master_inv_name: "master" # ansible inventory host name
+
+bind9_forwarders:
+  - 8.8.8.8
+  - 1.1.1.1
+
+bind9_zones:
+  - name: "example.com"
+    serial: "{{ ansible_date_time.epoch }}"
+    refresh: 3600
+    retry: 600
+    expire: 604800
+    ttl: 86400
+    master:
+      - "127.0.0.1"
+    allow_transfer:
+      - "127.0.0.1"
+    records:
+      - name: "@"
+        type: "A"
+        value: "127.0.0.1"

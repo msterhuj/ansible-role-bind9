@@ -1,0 +1,13 @@
+---
+- name: "Install bind9 for system based on apt"
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    update_cache: true
+    state: present
+  become: true
+  when: ansible_os_family == "Debian"
+  loop:
+    - bind9
+    - bind9utils
+    - bind9-doc
+    - dnsutils

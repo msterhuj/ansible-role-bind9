@@ -1,0 +1,20 @@
+galaxy_info:
+  author: msterhuj
+  description: Install and manage bind9 master, slave server and zone.
+  company: ""
+
+  issue_tracker_url: https://github.com/cloud-esgi/ansible-role-bind9/issues
+
+  license: MIT
+
+  min_ansible_version: "2.1"
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+
+  galaxy_tags:
+    - "bind9"
+
+dependencies: []

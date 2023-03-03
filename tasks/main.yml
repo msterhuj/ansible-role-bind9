@@ -1,0 +1,10 @@
+---
+- name: "Install"
+  ansible.builtin.include_tasks: install.yml
+  tags:
+    - bind9_install
+
+- name: "Configure"
+  ansible.builtin.include_tasks: configure.yml
+  tags:
+    - bind9_configure

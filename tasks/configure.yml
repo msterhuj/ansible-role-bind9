@@ -1,0 +1,45 @@
+---
+- name: "Update hostname"
+  ansible.builtin.hostname:
+    name: "{{ bind9_hostname }}"
+
+# todo add update of /etc/hosts
+# todo add update for /etc/resolv.conf
+
+- name: "Generate named.conf.options"
+  ansible.builtin.template:
+    src: named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
+- name: "Generate named.conf.local"
+  ansible.builtin.template:
+    src: named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
+- name: "Generate all db for zones"
+  ansible.builtin.template:
+    src: db.local.j2
+    dest: /etc/bind/db.{{ item.name }}
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  loop: "{{ bind9_zones }}"
+  when: bind9_master_inv_name == inventory_hostname
+
+# todo add check for bind9_zones config
+
+- name: "Ensure bind9 is running"
+  ansible.builtin.service:
+    name: bind9
+    state: restarted
+    enabled: true
+  become: true
