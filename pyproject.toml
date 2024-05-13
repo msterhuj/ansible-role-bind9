@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "msterhuj-bind9"
+version = "0.1.0"
+description = "used for ci"
+authors = ["msterhuj <gabin.lanore@gmail.com>"]
+license = "GPL-3.0-only"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.12"
+molecule = "^24.2.0"
+molecule-plugins = {extras = ["docker"], version = "^23.5.3"}
+ansible = "^9.3.0"
+pytest-testinfra = "^10.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
