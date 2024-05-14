@@ -7,6 +7,8 @@ bind9_forwarders:
   - 8.8.8.8
   - 1.1.1.1
 
+bind9_statistics: true # enable statistics-channels on port 127.0.0.1:8053 use bind_exporter to scrape metrics
+
 bind9_zones:
   - name: "example.com"
     serial: "10" #  "{{ ansible_date_time.epoch }}"
