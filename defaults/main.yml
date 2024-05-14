@@ -1,7 +1,7 @@
 ---
 bind9_hostname: "{{ ansible_hostname }}"
 
-bind9_master_inv_name: "master" # ansible inventory host name
+bind9_master_name: "{{ bind9_hostname }}" # host name of the master server
 
 bind9_forwarders:
   - 8.8.8.8
@@ -9,7 +9,7 @@ bind9_forwarders:
 
 bind9_zones:
   - name: "example.com"
-    serial: "{{ ansible_date_time.epoch }}"
+    serial: "10" #"{{ ansible_date_time.epoch }}"
     refresh: 3600
     retry: 600
     expire: 604800
