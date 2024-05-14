@@ -18,7 +18,7 @@
     mode: "0644"
   become: true
   loop: "{{ bind9_zones }}"
-  when: bind9_master_name == bind9_hostname
+  when: bind9_master
   notify: Restart bind9
 
 - name: "Generate named.conf.local"

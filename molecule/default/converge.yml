@@ -4,3 +4,5 @@
   become: true
   roles:
     - role: msterhuj.bind9
+      vars:
+        bind9_ns_name: "ns1"

@@ -2,27 +2,28 @@
 
 {% for zone in bind9_zones %}
 zone "{{ zone.name }}" {
-    {% if bind9_master_name == bind9_hostname %}
+
+{% if bind9_master %}
     type master;
-    {% else %}
+{% else %}
     type slave;
-    {% endif %}
+{% endif %}
 
     file "/etc/bind/db.{{ zone.name }}";
 
-    {# master config #}
-    {% if bind9_master_name == bind9_hostname %}
+{# master config #}
+{% if bind9_master %}
     notify yes;
     allow-transfer {
         {{ zone.allow_transfer | join(';') }};
     };
 
-    {# slave config #}
-    {% else %}
+{# slave config #}
+{% else %}
     masters {
         {{ zone.master | join(';') }};
     };
-    {% endif %}
+{% endif %}
 };
 {% endfor %}
 
