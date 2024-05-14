@@ -9,7 +9,7 @@ bind9_forwarders:
 
 bind9_zones:
   - name: "example.com"
-    serial: "10" #"{{ ansible_date_time.epoch }}"
+    serial: "10" #  "{{ ansible_date_time.epoch }}"
     refresh: 3600
     retry: 600
     expire: 604800
