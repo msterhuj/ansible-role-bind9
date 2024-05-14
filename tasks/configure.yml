@@ -31,7 +31,16 @@
   become: true
   notify: Restart bind9
 
-# todo add check for bind9_zones config
+
+- name: "Validate bind9 configuration"
+  ansible.builtin.command:
+    cmd: named-checkconf
+  become: true
+  register: named_checkconf
+  failed_when: named_checkconf.rc != 0
+  changed_when: false
+
+# find to validate the configuration for db files
 
 - name: "Ensure bind9 is running"
   ansible.builtin.service:

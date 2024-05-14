@@ -14,10 +14,10 @@ options {
     dnssec-validation auto;
 
     listen-on-v6 { any; };
+};
 
 {% if bind9_statistics %}
-    statistics-channels {
-        inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
-    };
-{% endif %}
+statistics-channels {
+    inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
 };
+{% endif %}
