@@ -1,0 +1,21 @@
+---
+name: Publish role on Ansible Galaxy
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    name: Publish on Ansible Galaxy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Release Ansible Role to Galaxy
+        uses: hspaans/ansible-galaxy-action@v1
+        with:
+          api_key: ${{ secrets.GALAXY_API_KEY }}
