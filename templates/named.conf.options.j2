@@ -12,6 +12,13 @@ options {
 {% endif %}
 
     dnssec-validation auto;
+{% if bind9_allow_query %}
+    allow-query     {
+        {% for network in bind9_allow_query %}
+        {{ network }};
+        {% endfor %}
+    };
+{% endif %}
 
     listen-on-v6 { any; };
 };
