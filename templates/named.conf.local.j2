@@ -9,7 +9,11 @@ zone "{{ zone.name }}" {
     type slave;
 {% endif %}
 
+{% if bind9_master %}
     file "/etc/bind/db.{{ zone.name }}";
+{% else %}
+    file "/var/lib/bind/db.{{ zone.name }}";
+{% endif %}
 
 {# master config #}
 {% if bind9_master %}
