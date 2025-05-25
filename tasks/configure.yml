@@ -18,7 +18,9 @@
     mode: "0644"
   become: true
   loop: "{{ bind9_zones }}"
-  when: bind9_master
+  when: item.master is not defined
+  # We only want to create zone files if we are the master for this zone
+  # and only slaves will have a master attribute
   notify: Restart bind9
 
 - name: "Generate named.conf.local"
