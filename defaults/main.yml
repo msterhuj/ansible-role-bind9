@@ -13,7 +13,19 @@ bind9_allow_query:
 bind9_statistics: true # enable statistics-channels on port 127.0.0.1:8053 use bind_exporter to scrape metrics
 
 bind9_zones:
-  - name: "example.com"
+  - name: "example.com"  # master
+    serial: "10" #  "{{ ansible_date_time.epoch }}"
+    refresh: 3600
+    retry: 600
+    expire: 604800
+    ttl: 86400
+    allow_transfer:
+      - "127.0.0.1"
+    records:
+      - name: "@"
+        type: "A"
+        value: "127.0.0.1"
+  - name: "example.org"  # slave
     serial: "10" #  "{{ ansible_date_time.epoch }}"
     refresh: 3600
     retry: 600
@@ -21,9 +33,3 @@ bind9_zones:
     ttl: 86400
     master:
       - "127.0.0.1"
-    allow_transfer:
-      - "127.0.0.1"
-    records:
-      - name: "@"
-        type: "A"
-        value: "127.0.0.1"
