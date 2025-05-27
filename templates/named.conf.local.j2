@@ -3,27 +3,21 @@
 {% for zone in bind9_zones %}
 zone "{{ zone.name }}" {
 
-{% if bind9_master %}
+{% if 'master' not in zone %}
     type master;
-{% else %}
-    type slave;
-{% endif %}
-
     file "/etc/bind/db.{{ zone.name }}";
-
-{# master config #}
-{% if bind9_master %}
     notify yes;
     allow-transfer {
         {{ zone.allow_transfer | join(';') }};
     };
-
-{# slave config #}
 {% else %}
+    type slave;
+    file "/var/lib/bind/db.{{ zone.name }}";
     masters {
         {{ zone.master | join(';') }};
     };
 {% endif %}
+
 };
 {% endfor %}
 
