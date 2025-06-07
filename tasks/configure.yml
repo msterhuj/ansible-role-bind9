@@ -23,6 +23,14 @@
   # and only slaves will have a master attribute
   notify: Restart bind9
 
+- name: "Ensure directory exists for log files"
+  ansible.builtin.file:
+    path: /var/log/named
+    state: directory
+    owner: bind
+    group: bind
+    mode: "0700"
+
 - name: "Generate named.conf.local"
   ansible.builtin.template:
     src: named.conf.local.j2

@@ -33,7 +33,7 @@ statistics-channels {
 };
 {% endif %}
 
-{% if bind9_logging %}
+{% if bind9_logging | default(false) %}
 logging {
   {% for line in bind9_logging %}
   {{ line }}
