@@ -11,7 +11,11 @@ options {
     };
 {% endif %}
 
-    dnssec-validation auto;
+{% if bind9_extra_options %}
+    {% for line in bind9_extra_options %}
+        {{ line }}
+    {% endfor %}
+{% endif %}
 {% if bind9_allow_query %}
     allow-query     {
         {% for network in bind9_allow_query %}
@@ -26,5 +30,13 @@ options {
 {% if bind9_statistics %}
 statistics-channels {
     inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
+};
+{% endif %}
+
+{% if bind9_logging %}
+logging {
+  {% for line in bind9_logging %}
+  {{ line }}
+  {% endfor %}
 };
 {% endif %}
