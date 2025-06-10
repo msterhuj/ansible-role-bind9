@@ -6,8 +6,8 @@ dependency:
   options:
     ignore-errors: true
 platforms:
-  - name: molecule-systemd-ubuntu-22.04
-    image: geerlingguy/docker-ubuntu2204-ansible
+  - name: ${MOLECULE_INSTANCE_NAME:-"molecule_default"}
+    image: ${IMAGE:-"geerlingguy/docker-ubuntu2204-ansible"}
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
