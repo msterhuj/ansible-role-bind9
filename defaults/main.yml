@@ -10,6 +10,23 @@ bind9_forwarders:
 bind9_allow_query:
   - "any"
 
+# Extra options are put into the "options" section of named.conf.options
+bind9_extra_options:
+  - dnssec-validation auto;
+
+# if bind9_logging is defined, this will be put in the "logging" section
+# of named.conf.options
+# bind9_logging:
+#   - 'channel query_log {'
+#   - '  file "/var/log/named/query.log" versions 3 size 10M;'
+#   - '  severity info;'
+#   - '  print-time yes;'
+#   - '};'
+#   - 'category queries {'
+#   - '  query_log;'
+#   - '};'
+
+
 bind9_statistics: true # enable statistics-channels on port 127.0.0.1:8053 use bind_exporter to scrape metrics
 
 bind9_zones:
