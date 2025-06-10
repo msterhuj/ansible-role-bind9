@@ -34,16 +34,18 @@ jobs:
           tox -e lint
 
   molecule:
-    name: Molecule Test on ${{ matrix.distro }}
+    name: Molecule (${{ matrix.scenario }}) on ${{ matrix.distro }}
     needs: lint
     runs-on: ubuntu-latest
     strategy:
       matrix:
         distro:
-          - geerlingguy/docker-ubuntu2204-ansible
-          - geerlingguy/docker-ubuntu2404-ansible
-          - geerlingguy/docker-debian12-ansible
-          - geerlingguy/docker-debian11-ansible
+          - ubuntu2204
+          - ubuntu2404
+          - debian12
+          - debian11
+        scenario:
+          - default
     steps:
       - uses: actions/checkout@v4
         with:
@@ -58,6 +60,6 @@ jobs:
         run: pip install tox
 
       - name: Run Molecule via tox
-        run: tox -e molecule
+        run: tox -e molecule -- --scenario-name ${{ matrix.scenario }}
         env:
-          IMAGE: ${{ matrix.distro }}
+          IMAGE: geerlingguy/docker-${{ matrix.distro }}-ansible
