@@ -1,5 +1,5 @@
 
-SCENARIOS := default
+SCENARIOS := default zone-transfer
 IMAGES = \
   geerlingguy/docker-ubuntu2204-ansible \
   geerlingguy/docker-ubuntu2404-ansible \

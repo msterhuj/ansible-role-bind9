@@ -46,6 +46,7 @@ jobs:
           - debian11
         scenario:
           - default
+          - zone-transfer
     steps:
       - uses: actions/checkout@v4
         with:
