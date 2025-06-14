@@ -39,9 +39,15 @@ bind9_zones:
     allow_transfer:
       - "127.0.0.1"
     records:
+      - name: "{{ bind9_ns_name }}"
+        type: "A"
+        value: "{{ ansible_default_ipv4.address }}"
       - name: "@"
         type: "A"
         value: "127.0.0.1"
+      - name: "@"
+        type: "AAAA"
+        value: "::1"
   - name: "example.org"  # slave
     serial: "10" #  "{{ ansible_date_time.epoch }}"
     refresh: 3600
