@@ -48,6 +48,10 @@ bind9_zones:
       - name: "@"
         type: "AAAA"
         value: "::1"
+      - origin: "test.example.com"
+      - name: "test" # test.example.com
+        type: "A"
+        value: "127.0.0.1"
   - name: "example.org"  # slave
     serial: "10" #  "{{ ansible_date_time.epoch }}"
     refresh: 3600

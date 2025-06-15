@@ -12,5 +12,9 @@ $TTL    604800
 @       IN      NS      {{ bind9_ns_name }}.{{ item.name }}.
 
 {% for record in item.records %}
+{% if "origin" in record %}
+{{ record.origin }}.
+{% else %}
 {{ record.name }}       IN      {{ record.type }}       {{ record.value }}
+{% endif %}
 {% endfor %}
