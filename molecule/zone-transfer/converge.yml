@@ -1,0 +1,59 @@
+---
+- name: Vim
+  hosts: all
+  become: true
+  tasks:
+    - name: "Apt update"
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      when: ansible_os_family == "Debian"
+    - name: Install Devel packages
+      ansible.builtin.package:
+        name:
+          - iputils-ping
+          - vim
+          - lnav
+        state: present
+
+- name: Converge
+  hosts: master
+  become: true
+  roles:
+    - role: msterhuj.bind9
+      vars:
+        bind9_ns_name: "ns1"
+        bind9_master: true
+        bind9_statistics: false
+        bind9_zones:
+          - name: "example.com"
+            serial: "10"
+            refresh: 3600
+            retry: 600
+            expire: 604800
+            ttl: 86400
+            allow_transfer:
+              - "{{ hostvars['slave']['ansible_default_ipv4']['address'] }}"
+            records:
+              - name: "@"
+                type: "A"
+                value: "127.0.0.1"
+
+- name: Converge
+  hosts: slave
+  become: true
+  roles:
+    - role: msterhuj.bind9
+      vars:
+        bind9_ns_name: "ns2"
+        bind9_master: false
+        bind9_statistics: false
+        bind9_zones:
+          - name: "example.com"
+            serial: "10"
+            refresh: 3600
+            retry: 600
+            expire: 604800
+            ttl: 86400
+            master:
+              - "{{ hostvars['master']['ansible_default_ipv4']['address'] }}"
