@@ -49,7 +49,7 @@ bind9_zones:
         type: "AAAA"
         value: "::1"
       - origin: "test.example.com"
-      - name: "test" # test.example.com
+      - name: "foo" # foo.test.example.com
         type: "A"
         value: "127.0.0.1"
   - name: "example.org"  # slave
