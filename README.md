@@ -28,7 +28,7 @@ Example Playbook
 ```yaml
 - name: "Install and configure bind9"
   roles:
-    - role: msterhuj.bind9m
+    - role: msterhuj.bind9
 ```
 
 License

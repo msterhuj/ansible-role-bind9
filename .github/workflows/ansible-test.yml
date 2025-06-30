@@ -1,5 +1,6 @@
 # .github/workflows/ansible-lint.yml
 name: Lint and Test Ansible Role
+run-name: Lint and test role on code of user @${{ github.actor }}
 on:
   workflow_dispatch:
   push:
@@ -20,22 +21,32 @@ jobs:
         with:
           path: 'msterhuj.bind9'
 
-      - name: Set up Python 3.
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: Install test dependencies.
-        run: pip3 install ansible-lint
+      - name: Install tox
+        run: pip install tox
 
       - name: Lint code.
         run: |
-          ansible-lint -v .
+          tox -e lint
 
   molecule:
-    name: Molecule Test
+    name: Molecule (${{ matrix.scenario }}) on ${{ matrix.distro }}
     needs: lint
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - ubuntu2204
+          - ubuntu2404
+          - debian12
+          - debian11
+        scenario:
+          - default
+          - zone-transfer
     steps:
       - uses: actions/checkout@v4
         with:
@@ -46,11 +57,10 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install test dependencies.
-        run: pip3 install ansible molecule molecule-plugins[docker] docker pytest-testinfra
+      - name: Install tox
+        run: pip install tox
 
-      - name: Run Molecule tests.
-        run: molecule test
+      - name: Run Molecule via tox
+        run: tox -e molecule -- --scenario-name ${{ matrix.scenario }}
         env:
-          PY_COLORS: '1'
-          ANSIBLE_FORCE_COLOR: '1'
+          IMAGE: geerlingguy/docker-${{ matrix.distro }}-ansible

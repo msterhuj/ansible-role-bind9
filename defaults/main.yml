@@ -31,7 +31,7 @@ bind9_statistics: true # enable statistics-channels on port 127.0.0.1:8053 use b
 
 bind9_zones:
   - name: "example.com"  # master
-    serial: "10" #  "{{ ansible_date_time.epoch }}"
+    serial: 10 #  "{{ ansible_date_time.epoch }}"
     refresh: 3600
     retry: 600
     expire: 604800
@@ -53,7 +53,7 @@ bind9_zones:
         type: "A"
         value: "127.0.0.1"
   - name: "example.org"  # slave
-    serial: "10" #  "{{ ansible_date_time.epoch }}"
+    serial: 10 #  "{{ ansible_date_time.epoch }}"
     refresh: 3600
     retry: 600
     expire: 604800

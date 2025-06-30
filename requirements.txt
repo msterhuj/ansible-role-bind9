@@ -1,0 +1,7 @@
+ansible-lint==25.2.1
+molecule==24.2.0
+molecule-plugins[docker]==23.5.3
+ansible==9.3.0
+pytest-testinfra==10.1.0
+requests==2.29.0
+retry==0.9.2
