@@ -1,3 +1,5 @@
+from retry import retry
+
 def test_account_present(host):
     group = host.group("bind")
     user = host.user("bind")
@@ -9,13 +11,16 @@ def test_config_file(host):
         "/etc/bind/named.conf",
         "/etc/bind/named.conf.options",
     ]
-    if host.run("hostname") == "master":
+
+    hostname = host.ansible.get_variables().get('inventory_hostname')
+    if hostname == "master":
         files.append("/etc/bind/db.example.com")
     else:
         files.append("/var/lib/bind/db.example.com")
 
-    for file in files:
-        config = host.file(file)
-        assert config.exists
+    @retry(AssertionError, tries=5, delay=5.0)
+    def _check_file():
+        for file in files:
+            assert host.file(file).exists
 
-# todo add test for zone transfer
+    _check_file()

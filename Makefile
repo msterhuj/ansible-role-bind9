@@ -18,3 +18,15 @@ test-all:
 			IMAGE=$$image tox -e molecule -- --scenario-name $$scenario || exit 1; \
 		done \
 	done
+
+test-scenario:
+	@for scenario in $(SCENARIOS); do \
+		echo "=== Running Molecule scenario '$$scenario' ==="; \
+		tox -e molecule -- --scenario-name $$scenario || exit 1; \
+	done
+
+pull-images:
+	@for image in $(IMAGES); do \
+		echo "Pulling Docker image: $$image"; \
+		docker pull $$image; \
+	done

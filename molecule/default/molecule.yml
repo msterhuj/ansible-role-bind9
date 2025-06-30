@@ -6,7 +6,7 @@ dependency:
   options:
     ignore-errors: true
 platforms:
-  - name: ${MOLECULE_INSTANCE_NAME:-"molecule_default"}
+  - name: single
     image: ${IMAGE:-"geerlingguy/docker-ubuntu2204-ansible"}
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
