@@ -6,3 +6,14 @@
     state: restarted
     enabled: true
   become: true
+
+# After we update the primary nameserver's records, we want to trigger
+# all of the secondary servers to get the updated records.
+- name: "Trigger secondaries to pull new records"
+  ansible.builtin.command:
+    cmd: rndc retransfer {{ item.domain }}
+  become: true
+  delegate_to: "{{ item.host }}"
+  when: bind9_mirrors is defined
+  changed_when: false
+  with_items: "{{ bind9_mirrors }}"

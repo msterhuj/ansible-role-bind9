@@ -7,7 +7,9 @@
     group: root
     mode: "0644"
   become: true
-  notify: Restart bind9
+  notify:
+    - Restart bind9
+    - Trigger secondaries to pull new records
 
 - name: "Generate all db for zones"
   ansible.builtin.template:
@@ -21,7 +23,9 @@
   when: item.master is not defined
   # We only want to create zone files if we are the master for this zone
   # and only slaves will have a master attribute
-  notify: Restart bind9
+  notify:
+    - Restart bind9
+    - Trigger secondaries to pull new records
 
 - name: "Ensure directory exists for log files"
   ansible.builtin.file:
