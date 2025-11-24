@@ -62,6 +62,7 @@ bind9_zones:
       - "127.0.0.1"
 
 # List of the mirrors which should pull updates when changes are deployed
+bind9_mirrors: []
 # bind9_mirrors:
 #   - host: ns2.example.com
 #     domain: example.com

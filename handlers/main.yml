@@ -14,6 +14,6 @@
     cmd: rndc retransfer {{ item.domain }}
   become: true
   delegate_to: "{{ item.host }}"
-  when: bind9_mirrors is defined
+  when: bind9_mirrors is defined and bind9_mirrors is not none and bind9_mirrors | length > 0
   changed_when: false
-  with_items: "{{ bind9_mirrors }}"
+  loop: "{{ bind9_mirrors }}"
