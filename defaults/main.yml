@@ -60,3 +60,13 @@ bind9_zones:
     ttl: 86400
     master:
       - "127.0.0.1"
+
+# List of the mirrors which should pull updates when changes are deployed
+bind9_mirrors: []
+# bind9_mirrors:
+#   - host: ns2.example.com
+#     domain: example.com
+#   - host: ns3.example.com
+#     domain: example.com
+#   - host: ns2.example.org
+#     domain: example.com
